@@ -1,0 +1,33 @@
+#include<iostream>
+using namespace std;
+#define MAXN 1000005
+int sequence[] = { 5L,2,3,4,1,2,5 };
+int mlen[MAXN];
+int binsearch(int a, int b, int k)
+{
+	while (a < b)
+	{
+		int mid = (a + b) >> 1;
+		if (mlen[mid] < k) a = mid + 1;
+		else b = mid;
+	}
+	return a;
+}
+
+int LIS(int* seq, int size)
+{
+	int p,a=0,b=0;
+	for (int i = 0; i < size; ++i)
+	{
+		p = binsearch(a, b, seq[i]);
+		if (mlen[p] >= seq[i])mlen[p] = seq[i];
+		else mlen[b++]=seq[i];
+	}
+	return b;
+}
+
+int main()
+{
+	cout << LIS(sequence, sizeof(sequence) / sizeof(int));
+	system("pause");
+}
